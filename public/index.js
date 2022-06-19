@@ -10,10 +10,9 @@ if (username) {
 
 
 
-const btnForm = document.getElementById('btnForm')
-const btnChat = document.getElementById('btnChat')
 const socket = io()
 
+const btnForm = document.getElementById('btnForm')
 btnForm.onclick = e => {
     e.preventDefault() 
 
@@ -25,6 +24,8 @@ btnForm.onclick = e => {
     socket.emit('add', {name, price, photo})
 }
 
+
+const btnChat = document.getElementById('btnChat')
 btnChat.onclick = e => {
     e.preventDefault() 
 
@@ -33,8 +34,8 @@ btnChat.onclick = e => {
     socket.emit('chat-in', { msn, username})
 }
 
-socket.on('show', productos => {
-    console.log(productos)
+socket.on('show', () => {
+    //console.log(productos)
 
     fetch('/tableProducts')
         .then(r => r.text())

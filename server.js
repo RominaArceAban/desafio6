@@ -33,11 +33,11 @@ app.post('/', (req, res)=>{
     console.log(req.body)
     productos.push(req.body)
     res.json(req.body)
-    //res.render('index', { productos }) 
 })
 
 app.get('/tableProducts', (req, res) => {
-    res.render('tableProducts', { productos })
+    res.render('tableProducts', { productos: contenedorProd.getAll()
+    })
 })
 
 app.get('/messages', (req, res) => {
@@ -50,6 +50,12 @@ io.on('connection', socket => {
     socket.on('add', data => {
         console.log(data)
         productos.push(data)
+        const dateProd = {
+            name: data.name,
+            price: data.price,
+            photo: data.photo
+        }
+        contenedorProd.save(dateProd)
         io.sockets.emit('show', productos)
     })
 
